@@ -1,5 +1,5 @@
 # Użyj obrazu bazowego Pythona
-FROM python:3.9-slim
+FROM python:3.10
 
 # Ustaw katalog roboczy na /app
 WORKDIR /app

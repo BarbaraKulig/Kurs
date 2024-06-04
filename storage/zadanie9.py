@@ -57,7 +57,6 @@ def scrape_quotes():
 
     return quotes_data, authors_list
 
-
 def save_to_json(filename, data):
     with open(filename, 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)

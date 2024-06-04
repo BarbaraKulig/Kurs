@@ -5,16 +5,19 @@ import json
 # Połącz się z bazą danych MongoDB Atlas
 connect(host="mongodb+srv://username:password@cluster0.mongodb.net/mydatabase?retryWrites=true&w=majority")
 
+
 class Author(Document):
     fullname = StringField(required=True)
     born_date = DateTimeField()
     born_location = StringField()
     description = StringField()
 
+
 class Quote(Document):
     tags = ListField(StringField())
     author = ReferenceField(Author)
     quote = StringField()
+
 
 def load_data_to_db():
     with open('authors.json', 'r') as file:
@@ -47,6 +50,7 @@ def load_data_to_db():
             )
             quote.save()
 
+
 def search_quotes(queries):
     if queries.startswith('tags:'):
         tags = queries.replace('tags:', '').split(',')
@@ -63,6 +67,7 @@ def search_quotes(queries):
         print(f'Quote: {quote.quote}')
         print(f'Tags: {quote.tags}')
         print()
+
 
 if __name__ == '__main__':
     load_data_to_db()

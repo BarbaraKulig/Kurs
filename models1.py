@@ -1,6 +1,5 @@
-# models1.py
-
 from mongoengine import Document, StringField, BooleanField
+
 
 class Contact(Document):
     first_name = StringField(required=True)

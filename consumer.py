@@ -21,7 +21,7 @@ def send_email(contact_id):
 
 
 # Funkcja callback wywoływana przy odbieraniu wiadomości z kolejki
-def callback(ch, method, properties, body):
+def callback(body):
     message = json.loads(body)
     contact_id = message['contact_id']
     contact = Contact.objects.get(id=contact_id)

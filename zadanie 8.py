@@ -44,16 +44,16 @@ def load_data_to_db():
         quote.save()
 
 
-def search_quotes(query):
-    if query.startswith('tags:'):
-        tags = query.replace('tags:', '').split(',')
+def search_quotes(queries):
+    if queries.startswith('tags:'):
+        tags = queries.replace('tags:', '').split(',')
         quotes = Quote.objects(tags__in=tags)
-    elif query.startswith('author:'):
-        author_name = query.replace('author:', '').strip()
+    elif queries.startswith('author:'):
+        author_name = queries.replace('author:', '').strip()
         author = Author.objects(fullname=author_name).first()
         quotes = Quote.objects(author=author)
     else:
-        quotes = Quote.objects(quote__icontains=query)
+        quotes = Quote.objects(quote__icontains=queries)
 
     for quote in quotes:
         print(f'Author: {quote.author.fullname}')

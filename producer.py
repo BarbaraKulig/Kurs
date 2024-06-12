@@ -4,7 +4,7 @@ import pika
 import json
 from faker import Faker
 from mongoengine import connect
-from models import Contact
+from models1 import Contact
 
 # Połączenie z RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
@@ -19,6 +19,7 @@ connect('contacts_db')
 # Faker do generowania fałszywych danych
 fake = Faker()
 
+
 # Tworzenie fałszywych kontaktów i umieszczanie ich w kolejce RabbitMQ
 def generate_contacts(num_contacts):
     for _ in range(num_contacts):
@@ -32,6 +33,7 @@ def generate_contacts(num_contacts):
         }
         channel.basic_publish(exchange='', routing_key='contacts_queue', body=json.dumps(message))
         print(f" [x] Sent {message}")
+
 
 generate_contacts(10)
 

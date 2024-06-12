@@ -2,7 +2,8 @@ from mongoengine import connect, Document, StringField, DateTimeField, Reference
 from datetime import datetime
 import json
 
-connect(host="mongodb://localhost:27017")
+# Połącz się z bazą danych MongoDB Atlas
+connect(host="mongodb+srv://username:password@cluster0.mongodb.net/mydatabase?retryWrites=true&w=majority")
 
 
 class Author(Document):
@@ -25,23 +26,29 @@ def load_data_to_db():
     with open('quotes.json', 'r') as file:
         quotes_data = json.load(file)
 
+    # Wczytywanie autorów do bazy danych
+    authors_dict = {}
     for author_data in authors_data:
+        born_date = datetime.strptime(author_data['born_date'], '%B %d, %Y') if author_data['born_date'] else None
         author = Author(
             fullname=author_data['fullname'],
-            born_date=datetime.strptime(author_data['born_date'], '%B %d, %Y'),
+            born_date=born_date,
             born_location=author_data['born_location'],
             description=author_data['description']
         )
         author.save()
+        authors_dict[author.fullname] = author
 
+    # Wczytywanie cytatów do bazy danych
     for quote_data in quotes_data:
-        author = Author.objects(fullname=quote_data['author']).first()
-        quote = Quote(
-            tags=quote_data['tags'],
-            author=author,
-            quote=quote_data['quote']
-        )
-        quote.save()
+        author = authors_dict.get(quote_data['author'])
+        if author:
+            quote = Quote(
+                tags=quote_data['tags'],
+                author=author,
+                quote=quote_data['quote']
+            )
+            quote.save()
 
 
 def search_quotes(queries):

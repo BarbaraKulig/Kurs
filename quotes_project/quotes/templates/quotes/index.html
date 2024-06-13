@@ -1,0 +1,13 @@
+<!-- quotes/templates/quotes/index.html -->
+{% extends "base_generic.html" %}
+
+{% block title %}Quotes{% endblock %}
+
+{% block content %}
+  <h1>Quotes</h1>
+  <ul>
+    {% for quote in quotes %}
+      <li>"{{ quote.text }}" - <a href="{% url 'author_detail' quote.author.id %}">{{ quote.author.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

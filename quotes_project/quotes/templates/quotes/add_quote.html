@@ -1,0 +1,13 @@
+<!-- quotes/templates/quotes/add_quote.html -->
+{% extends "base_generic.html" %}
+
+{% block title %}Add Quote{% endblock %}
+
+{% block content %}
+  <h1>Add Quote</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Quote</button>
+  </form>
+{% endblock %}

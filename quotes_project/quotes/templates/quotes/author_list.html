@@ -1,0 +1,13 @@
+<!-- quotes/templates/quotes/author_list.html -->
+{% extends "base_generic.html" %}
+
+{% block title %}Authors{% endblock %}
+
+{% block content %}
+  <h1>Authors</h1>
+  <ul>
+    {% for author in authors %}
+      <li><a href="{% url 'author_detail' author.id %}">{{ author.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

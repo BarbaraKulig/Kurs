@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2
+cloudinary
+pydantic
+python-dotenv
+fastapi-limiter
+email-validator
+python-jose
